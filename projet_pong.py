@@ -2,6 +2,7 @@
 
 import os
 from tkinter import *
+from tkinter import font
 
 # canvas
 fenetre = Tk()
@@ -23,10 +24,6 @@ def gameBall():
         dy *= -1
     if (coord[0] <= 0) or (coord[2] >= largeur):
         dx *= -1
-    if (coord[1] >= raquette_1) or (coord[3] <= raquette_2):
-        dy *= -1
-    if (coord[0] <= raquette_1) or (coord[2] >= raquette_2):
-        dx *= -1
     canvas.move(balle, dx, dy)
     fenetre.after(15, gameBall)
 
@@ -42,11 +39,6 @@ def clavier_haut2(event):
 
 def clavier_bas2(event):
     canvas.move(raquette_2, 0, ry)
-
-# quitter
-def destroy():
-    pass
-    fenetre.destroy
 
 # creation balle
 ball = canvas.create_oval 
@@ -69,6 +61,17 @@ ry = 20
 lign = canvas.create_line
 ligne_vertical = lign((largeur / 2), 0, (largeur / 2), hauteur, fill = "gray80", dash = (10, 5))
 
+# victoire
+def victory():
+    global dx, dy
+    coord = canvas.coords(balle)
+    victoire = canvas.create_text
+    if (coord[0] or coord[2] > 0):
+        victoire((largeur - 300), ((hauteur / 2) - (hauteur / 4)), text = "Victoire JOUEUR 1", fill = "white")
+    if (coord[2] or coord[0] < largeur):
+        victoire((largeur - 1700), ((hauteur / 2) - (hauteur / 4)), text = "Victoire JOUEUR 2", fill = "white")
+
+
 # ajout touche
 canvas.bind_all('<KeyPress-z>', clavier_haut)
 canvas.bind_all('<KeyPress-Z>', clavier_haut)
@@ -76,10 +79,10 @@ canvas.bind_all('<KeyPress-s>', clavier_bas)
 canvas.bind_all('<KeyPress-S>', clavier_bas)
 canvas.bind_all('<Up>', clavier_haut2)
 canvas.bind_all('<Down>', clavier_bas2)
-canvas.bind_all('<space>', destroy)
 
 # appel & boucle
 gameBall()
+victory()
 canvas.pack()
 fenetre.mainloop()
 fenetre.destroy()
