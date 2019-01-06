@@ -17,10 +17,13 @@ canvas.pack()
 fenetre.title("Pong")
 fenetre.attributes('-fullscreen', 1)
 
-#composants
-canvas.grid(row = 3, column = 3, rowspan = 2, columnspan = 3)
-btn_jouer = Button(fenetre, text = 'Jouer', command = 'jouer', width = 20)
-btn_quitter = Button(fenetre, text = 'Quitter', command = fenetre.destroy, width = 20)
+#paramètre commande
+quitter = fenetre.destroy
+
+#creations des boutons
+canvas.grid(row = 2, column = 3, rowspan = 2, columnspan = 3)
+btn_jouer = Button(fenetre, text = 'Jouer', command = , width = 20)
+btn_quitter = Button(fenetre, text = 'Quitter', command = quitter, width = 20)
 btn_jouer.grid(row = 2, column = 3, rowspan = 2, columnspan = 3)
 btn_quitter.grid(row = 3, column = 3, rowspan = 3, columnspan = 3)
 
